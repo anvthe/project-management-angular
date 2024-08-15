@@ -1,0 +1,45 @@
+<nav class="bg-gray-800 text-white shadow-md">
+  <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+    <a href="#" class="text-2xl font-bold">Project Management System</a>
+    <div class="flex space-x-4">
+      <a  routerLink="add"  class="btn btn-success bg-green-600 hover:bg-green-700 text-white">Add Project</a>
+      <button (click)="logout()"  class="btn bg-red-600 hover:bg-red-700 text-white">Logout</button>
+    </div>
+  </div>
+</nav>
+<div class="container mx-auto mt-8 px-4">
+  <h1 class="text-2xl font-bold mb-8 text-center">Project Dashboard</h1>
+
+  <div class="flex flex-col items-center mb-8">
+    <div class="flex flex-col space-y-4 md:space-y-0 md:flex-row md:space-x-4">
+      <div>
+        <label for="startDatePicker" class="block text-lg font-medium mb-2">Start Date:</label>
+        <input
+          type="date"
+          id="startDatePicker"
+          class="input input-bordered w-full max-w-xs"
+          [value]="startDate"
+          (change)="onDateChange('start', $event)"
+        />
+      </div>
+      <div>
+        <label for="endDatePicker" class="block text-lg font-medium mb-2">End Date:</label>
+        <input
+          type="date"
+          id="endDatePicker"
+          class="input input-bordered w-full max-w-xs"
+          [value]="endDate"
+          (change)="onDateChange('end', $event)"
+        />
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="projects.length > 0; else noProjects" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+    <app-project-list *ngFor="let project of projects" [project]="project" (delete)="handleProjectDeletion($event)"></app-project-list>
+  </div>
+
+  <ng-template #noProjects>
+    <p class="text-center">No projects found.</p>
+  </ng-template>
+</div>
